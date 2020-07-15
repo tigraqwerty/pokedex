@@ -17,10 +17,13 @@ export class PokemonService {
 
   /**
    * getPokemonList
+   * @description method return list of poquemon by offset param
+   * @param offset: number
+   * @returns Observable<PokemonListModel>
    */
-  public updatePokemonList(offset: number): Observable<any> {
+  public updatePokemonList(offset: number): Observable<PokemonListModel> {
     if (!!this.pokemnList && this.pokemnList[`${offset - this.limit}`]) {
-      return of(this.pokemnList);
+      return of(this.pokemnList[`${offset - this.limit}`]);
     }
 
     return this.loadPockemonList(offset).pipe(
