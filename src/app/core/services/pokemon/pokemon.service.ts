@@ -22,8 +22,8 @@ export class PokemonService {
    * @returns Observable<PokemonListModel>
    */
   public updatePokemonList(offset: number): Observable<PokemonListModel> {
-    if (!!this.pokemnList && this.pokemnList[`${offset - this.limit}`]) {
-      return of(this.pokemnList[`${offset - this.limit}`]);
+    if (!!this.pokemnList && this.pokemnList[offset]) {
+      return of(this.pokemnList[offset]);
     }
 
     return this.loadPockemonList(offset).pipe(
