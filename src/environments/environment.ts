@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apis: {
     getList: 'https://pokeapi.co/api/v2/pokemon',
+    getFilters: 'https://pokeapi.co/api/v2/type',
   },
 };
 

@@ -1,6 +1,6 @@
-import { IPokemonListResponse } from './pokemon-list-response.interface';
+import { IPokemonApiResponse } from './pokemon-api-response.interface';
 import { IPokemonDitailsRresponse } from './pokemon-ditails-response.interface';
-import { IPokemonListItemResponse } from './pokemon-list-item-response.interface';
+import { IPokemonApiItemResponse } from './pokemon-api-item-response.interface';
 import { PokemonDitailsModel } from './pokemon-ditails.model';
 
 export class PokemonListModel {
@@ -10,13 +10,13 @@ export class PokemonListModel {
   public previous!: string;
   public pokemons: PokemonDitailsModel[] = [];
 
-  constructor(list: IPokemonListResponse, pokemons: IPokemonDitailsRresponse[]) {
+  constructor(list: IPokemonApiResponse, pokemons: IPokemonDitailsRresponse[]) {
     this.setData(list);
     this.setKey(list.next);
     this.setResult(list.results, pokemons);
   }
 
-  private setData(list: IPokemonListResponse): void {
+  private setData(list: IPokemonApiResponse): void {
     this.next = list.next;
     this.previous = list.previous;
     this.count = this.count;
@@ -29,7 +29,7 @@ export class PokemonListModel {
       this.key = offset;
     }
   }
-  private setResult(list: IPokemonListItemResponse[], pokemons: IPokemonDitailsRresponse[]): void {
+  private setResult(list: IPokemonApiItemResponse[], pokemons: IPokemonDitailsRresponse[]): void {
     list.forEach((item) => {
       let pokemonDitailsIdx = pokemons.findIndex((pokemon) => pokemon.name === item.name);
       if (pokemonDitailsIdx !== -1) {

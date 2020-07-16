@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { ModalFilterComponent } from './components/modal-filter/modal-filter.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  declarations: [ModalFilterComponent],
+  imports: [CommonModule],
 })
-export class SharedModule { }
+export class SharedModule {}
