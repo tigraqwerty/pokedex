@@ -9,6 +9,7 @@ import { IPokemonApiResponse } from '@shared/models/pokemon-api-response.interfa
 import { PokemonListModel } from '@shared/models/pokemon-list.model';
 import { IPokemonDitailsRresponse } from '@shared/models/pokemon-ditails-response.interface';
 import { IPokemonApiItemResponse } from '@shared/models/pokemon-api-item-response.interface';
+import { PokemonDitailsModel } from '@shared/models/pokemon-ditails.model';
 
 @Injectable()
 export class PokemonService {
@@ -17,7 +18,9 @@ export class PokemonService {
   private limit: number = 100;
   private selectedFilter: IPokemonApiItemResponse;
   private filterSubject: Subject<IPokemonApiItemResponse> = new Subject<IPokemonApiItemResponse>();
+
   public filterWhatcher$: Observable<IPokemonApiItemResponse> = this.filterSubject.asObservable();
+
   constructor(private http: HttpClient) {}
 
   /**
@@ -42,15 +45,18 @@ export class PokemonService {
 
     return result.pipe(
       map((rl) => {
+        let result: PokemonListModel = JSON.parse(JSON.stringify(rl));
         if (this.selectedFilter) {
-          rl.pokemons = rl.pokemons.filter((item) => item.types.includes(this.selectedFilter.name));
+          result.pokemons = result.pokemons.filter((item) => item.types.includes(this.selectedFilter.name));
         }
-
-        return rl;
+        return result;
       })
     );
   }
 
+  /**
+   * getFilter
+   */
   public getFilter(): Observable<IPokemonApiItemResponse[]> {
     if (!!this.filters) {
       return of(this.filters);
@@ -63,13 +69,42 @@ export class PokemonService {
     );
   }
 
+  /**
+   * getSelectedFilter
+   */
   public getSelectedFilter(): IPokemonApiItemResponse {
     return this.selectedFilter;
   }
 
+  /**
+   * setSelectedFilter
+   */
   public setSelectedFilter(item: IPokemonApiItemResponse): void {
     this.selectedFilter = item;
     this.filterSubject.next(item);
+  }
+
+  /**
+   * getPokemonById
+   */
+  public getPokemonById(id: number): Observable<PokemonDitailsModel> {
+    let result: PokemonDitailsModel;
+    if (this.pokemnList) {
+      let keys = Object.keys(this.pokemnList);
+      let count = 0;
+      while (!!!result) {
+        let pokemonIdx = this.pokemnList[keys[count]].pokemons.findIndex((pokemon) => pokemon.id === id);
+        if (pokemonIdx !== -1) {
+          result = this.pokemnList[keys[count]].pokemons[pokemonIdx];
+        }
+        count++;
+      }
+      return of(result);
+    }
+
+    return this.loadPokemon(`${environment.apis.getList}/${id}`).pipe(
+      map((pokemon) => new PokemonDitailsModel(pokemon))
+    );
   }
 
   private loadPockemonList(offset: number): Observable<PokemonListModel> {

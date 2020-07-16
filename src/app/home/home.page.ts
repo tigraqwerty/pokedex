@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { PokemonService } from '@core/services/pokemon/pokemon.service';
 import { PokemonListModel } from '@shared/models/pokemon-list.model';
 import { PokemonDitailsModel } from '@shared/models/pokemon-ditails.model';
 import { ModalFilterComponent } from '@shared/components/modal-filter/modal-filter.component';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,12 @@ export class HomePage implements OnInit, OnDestroy {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor(private pokemonService: PokemonService, private modalController: ModalController) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private modalController: ModalController,
+    private navCtrl: NavController,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -53,5 +59,11 @@ export class HomePage implements OnInit, OnDestroy {
     const modal = await this.modalController.create({ component: ModalFilterComponent });
 
     return modal.present();
+  }
+
+  public viewDitails(id: string): void {
+    // this.router.navigate(['/ditails', { id: id }]);
+    this.router.navigate(['/ditails', id]);
+    // this.navCtrl.navigateForward(`/ditails/${id}`);
   }
 }
