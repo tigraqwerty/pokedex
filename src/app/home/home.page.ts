@@ -1,25 +1,38 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 
 import { PokemonService } from '@core/services/pokemon/pokemon.service';
 import { PokemonListModel } from '@shared/models/pokemon-list.model';
 import { PokemonDitailsModel } from '@shared/models/pokemon-ditails.model';
+import { ModalFilterComponent } from '@shared/components/modal-filter/modal-filter.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   public pokemonsList: PokemonDitailsModel[] = [];
+
   private currentData!: PokemonListModel;
+  private filterWhatcher: Subscription;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService, private modalController: ModalController) {}
 
   ngOnInit(): void {
     this.loadData();
+    this.filterWhatcher = this.pokemonService.filterWhatcher$.subscribe(() => {
+      this.currentData = null;
+      this.pokemonsList = [];
+      this.loadData();
+    });
+  }
+
+  ngOnDestroy() {
+    this.filterWhatcher.unsubscribe();
   }
 
   public loadData(event: any = null) {
@@ -31,5 +44,14 @@ export class HomePage implements OnInit {
       }
       this.infiniteScroll.disabled = false;
     });
+  }
+
+  public async openFilters(event: Event): Promise<any> {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const modal = await this.modalController.create({ component: ModalFilterComponent });
+
+    return modal.present();
   }
 }
