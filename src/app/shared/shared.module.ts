@@ -5,5 +5,6 @@ import { ModalFilterComponent } from './components/modal-filter/modal-filter.com
 @NgModule({
   declarations: [ModalFilterComponent],
   imports: [CommonModule],
+  exports: [],
 })
 export class SharedModule {}

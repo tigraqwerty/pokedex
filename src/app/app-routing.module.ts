@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: 'ditails',
+    path: 'ditails/:id',
     loadChildren: () => import('./ditails/ditails.module').then((m) => m.DitailsModule),
   },
   {
