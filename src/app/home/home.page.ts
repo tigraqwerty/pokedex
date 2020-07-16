@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { IonInfiniteScroll, ModalController, NavController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -24,7 +24,6 @@ export class HomePage implements OnInit, OnDestroy {
   constructor(
     private pokemonService: PokemonService,
     private modalController: ModalController,
-    private navCtrl: NavController,
     private router: Router
   ) {}
 
@@ -37,7 +36,7 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.filterWhatcher.unsubscribe();
   }
 
@@ -48,7 +47,9 @@ export class HomePage implements OnInit, OnDestroy {
       if (event) {
         event.target.complete();
       }
-      this.infiniteScroll.disabled = false;
+      if (this.infiniteScroll) {
+        this.infiniteScroll.disabled = false;
+      }
     });
   }
 
@@ -62,8 +63,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   public viewDitails(id: string): void {
-    // this.router.navigate(['/ditails', { id: id }]);
     this.router.navigate(['/ditails', id]);
-    // this.navCtrl.navigateForward(`/ditails/${id}`);
   }
 }
