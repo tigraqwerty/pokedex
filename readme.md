@@ -1,95 +1,41 @@
 # Prueba técnica de Movilidad Híbrida AtSistemas
 
-El objetivo de esta prueba será hacer una app en @ionic/angular que consuma los servicios de la api pública [pokeapi](https://pokeapi.co)
+## Que sea una aplicación funcional
 
-# Tabla de Contenidos
-- [Análisis Funcional](#Análisis-funcional)
-- [PokeApi (API)](#PokeApi-(API))
-- [Pantallas](#Pantallas)
-    - [Home](#Home)
-    - [Filter (Modal)](#Filter-(Modal))
-    - [Detalle](#Filter-(Modal))
-- [Se valorará positivamente](#Se-valorará-postivamente)
-- [Entregable](#Entregable)
+Es una app functional que cumple todos los requisitos pedidos.
 
+## Cumplir las [reglas de estilo de angular](https://angular.io/guide/styleguide)
 
-    
-    
+Está alineada con la guía de estilos de Angular. Todas la librerias utilizadas estan recomendado por los creadores de Framework
 
-## Análisis funcional
+## Control de errores
 
-Un cliente nos ha pedido que hagamos una pokédex. En la franquicia pokémon una pokédex es un terminal que permite ver la lista de pokémons y ver información sobre ellos.
+Se ha implementado un interceptor que capta todos los errores de las lladas a api.
 
-La app contiene 2 pantallas, la lista y detalle. Y una modal para filtrar los pokémon por tipo.
+## Lista de pokémon optimizada
 
-## PokeApi (API)
-La pokéapi es una API con autodescrubimiento, esto es que las própias llamadas te dan links a otras llamadas. 
+Se ha utilizado el infinite scroll para poder optimizar la carga de los datos ya que es neesario ir cargando todos los datos necesarios desde 2 distintos endpoints de api
 
-Estos endpoints pueden ser útiles para la app:
+## Tipar correctamente y hacer un correcto uso de las interfaces
 
-* https://pokeapi.co/api/v2/pokemon --> lista páginada con todos los pokémon
-* https://pokeapi.co/api/v2/type --> lista con todos los tipos de pokémon
+Todos los datos que se maneja la app esta tipado o po interface os bien por un modelo que contienen su logica
 
-Más información en:
-https://pokeapi.co/docs/v2.html
+## Uso de programación reactiva
 
+Las llamada a API mas alguna comunicación entre componentes esta realizado a traves de la libreria RXJS.
 
-## Pantallas
+## Internacionalización
 
-### Home Page
-![home](img/home.png)
+Se ha implementado el estándar de i18n usando la librería ngx-translate
 
-La pantalla home se compone de un un header superior con un botón que abre la modal de filtro y una **lista infinita con todos** los pokémon (actualmente la API devuelve 964).
-Si se pulsa sobre uno de los items te lleva a la página de detalle
+## Modularización y uso de lazy-load para la carga de las pantallas
 
+Todas las paginas estan modularizadas y cargan a traves de lazy-load
 
-### Filter (Modal)
-![filter](img/filter.png) ![filter selected](img/filter-selected.png)
+## Unit test de la pantalla principal
 
-La modal filter se compone de un header con el título y una lista con todos los tipos de pokémon. 
-Al pulsar sobre uno de los tipos, la modal se cierra y se hace el filtrado.
-En caso de volver a abrir la modal de filtro, tiene que salir la opción seleccionada. 
-Si se vuelve a pulsar el tipo se deselecciona y se vuelve a la pantalla original.
+He realizado el fix de todas la partes de app mas la implementacion de 2 Unit test de la pagina principal. No he realizado más por no demorar más la entrega
 
-Así quedaría la pantalla principal con los pokémons filtrados por tipo "fighting":
+## Entregar una apk funcional
 
-
-![home-filtered](img/home-filtered.png)
-
-
-### Detalle
-![detail](img/detail.png)
-
-Pantalla con los siguientes datos:
-- Imagen frontal (front_default), Imagen trasera (back_default)
-- La especie
-- El nombre
-- Altura
-- Peso
-
-Puedes añadir los datos extras que tu quieras.
-
-
-## Se valorará postivamente
-
-- Que sea una aplicación funcional
-- Cumplir las [reglas de estilo de angular](https://angular.io/guide/styleguide)
-- Control de errores
-- Lista de pokémon optimizada
-- Tipar correctamente y hacer un correcto uso de las interfaces
-- Uso de programación reactiva
-- Internacionalización
-- Modularización y uso de lazy-load para la carga de las pantallas
-- Unit test de la pantalla principal
-- Entregar una apk funcional
-
-## Entregable
-
-- Entregar el código del proyecto comprimido en ZIP. El nombre del archivo entregado tiene que ser NOMBRECANDIDATO_APELLIDOCANDIDATO_pruebaAT_vNUMEROVERSION.zip por ejemplo, paco_lopez_pruebaAT_v0.zip.
-
-## Anexos
-
-Se incluyen assets útiles para la app en /assets.
-
-
-	 
+El apk se puede instalarse a un emulador o dispositivo y esta listo para probar

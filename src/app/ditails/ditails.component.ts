@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { PokemonService } from '@core/services/pokemon/pokemon.service';
 import { PokemonDitailsModel } from '@shared/models/pokemon-ditails.model';
@@ -16,7 +15,7 @@ export class DitailsComponent implements OnInit {
   public currentPokemon!: PokemonDitailsModel;
   public transate = {};
   constructor(
-    private navCtrl: NavController,
+    private router: Router,
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
     private translateService: TranslateService
@@ -40,6 +39,6 @@ export class DitailsComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.navCtrl.navigateBack('/home');
+    this.router.navigate(['/home']);
   }
 }
