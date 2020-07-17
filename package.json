@@ -12,7 +12,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "run:prepared-apk": "native-run.cmd android --app app-debug.apk --virtual"
   },
   "private": true,
   "dependencies": {
